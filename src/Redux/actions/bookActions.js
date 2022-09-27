@@ -1,12 +1,18 @@
 import * as actionTypes from "../constants/bookConstants";
+import axios from "axios";
 
 // Get all books from database
 export const getBooks = () => async (dispatch) => {
   try {
     dispatch({ type: actionTypes.GET_BOOKS_REQUEST });
-    const url = `/.netlify/functions/get-all-books`;
-    const data = await fetch(url).then((res) => res.json());
+    const baseURL = {
+      dev: 'http://localhost:5000/books',
+      prod: `${process.env.REACT_APP_BACKEND_URL}/books`,
+    };
+    const url =
+      process.env.NODE_ENV === 'production' ? baseURL.prod : baseURL.dev;
 
+    const { data } = await axios.get(url);
     dispatch({
       type: actionTypes.GET_BOOKS_SUCCESS,
       payload: data,
@@ -22,12 +28,22 @@ export const getBooks = () => async (dispatch) => {
   }
 };
 
-// Get books from database filtered and sorted
+// Get all books from database sorted
 export const getSortedBooks = (sort, filter, page, perPage) => async (dispatch) => {
   try {
     dispatch({ type: actionTypes.GET_SORTED_BOOKS_REQUEST });
-    const url = `/.netlify/functions/get-books?sort=${sort}&filter=${filter}`;
-    const data = await fetch(url).then((res) => res.json());
+    const baseURL = {
+      dev: 'http://localhost:5000/books',
+      prod: `${process.env.REACT_APP_BACKEND_URL}/books`,
+    };
+    const url =
+      process.env.NODE_ENV === 'production' ? baseURL.prod : baseURL.dev;
+
+    const { data } = await axios.get(`${url}/${sort}`, {
+      params: {
+        filter: filter
+      }
+    });
 
     dispatch({
       type: actionTypes.GET_SORTED_BOOKS_SUCCESS,
@@ -57,10 +73,14 @@ export const getSortedBooks = (sort, filter, page, perPage) => async (dispatch) 
 export const getBookDetails = (id) => async (dispatch) => {
   try {
     dispatch({ type: actionTypes.GET_BOOK_DETAILS_REQUEST });
+    const baseURL = {
+      dev: 'http://localhost:5000/books',
+      prod: `${process.env.REACT_APP_BACKEND_URL}/books`,
+    };
+    const url =
+      process.env.NODE_ENV === 'production' ? baseURL.prod : baseURL.dev;
 
-    const url = `/.netlify/functions/get-book-details?id=${id}`;
-    const data = await fetch(url).then((res) => res.json());
-
+    const { data } = await axios.get(`${url}/${id}`);
     dispatch({
       type: actionTypes.GET_BOOK_DETAILS_SUCCESS,
       payload: data,
