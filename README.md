@@ -4,7 +4,7 @@ Geek Text is an online web application bookstore built using the MERN stack.
 
 This is the frontend for the Geek Text web app developed as a group project for our Spring 2021 CEN 4010 Software Engineering course.
 
-Visit [geek-text.ga](https://www.geek-text.ga/) to see it live.
+Visit [geektext.netlify.app](https://geektext.netlify.app/) to see it live.
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/667ba2ae-ce77-4c66-9c01-b0c2200f040a/deploy-status)](https://app.netlify.com/sites/geek-text-333/deploys)
 
